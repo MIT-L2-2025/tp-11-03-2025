@@ -1,0 +1,16 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+	echo "Aucun argument"
+fi
+LATLONG=$(grep "^$1" OSMTowns.txt | head -n1|tr '\t' ';')
+#tr change le separateur tab en ;
+nbreLigne=$(wc -l OSMTowns.txt)
+LAT=$(echo "$LATLONG" |cut -d ';' -f3)
+LONG=$(echo "$LATLONG" |cut -d ';' -f2)
+echo "======>1)Nombre de ville en France : $nbreLigne\n"
+echo "======>2)Latitude et Longitude :\n\tLa ville $1 a pour latitude $LAT et longitude $LONG\n"
+echo "======>3)Lien :\n\thttps:://www.openstreetmap.org/#map=18/$LAT/$LONG\n"
+echo "\n======>4)Liste des villes contenant 'chien' dans leur nom : "
+grep "chien" OSMTowns.txt
+echo "\n======>5)Liste des villes contenant 'Chat' ou 'chat' :"
+grep -i "chat" OSMTowns.txt
