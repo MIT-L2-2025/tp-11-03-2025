@@ -1,65 +1,36 @@
 #!/bin/bash
 
 while true; do
-	echo "[1]. Affichage ligne specifique d'un fichier"
-	echo "[2]. Coordonnees d'une ville "
-	echo "[3]. Cherche mot dans un fichier"
-	echo "[4]. Kill un proc +70% (mem / cpu)"
-	read -p "[exit]. quitter ->" choix
+    echo -e "[1]. Affichage ligne spécifique\n[2]. Coordonnées d'une ville\n[3]. Chercher mot dans un fichier\n[4]. Kill un proc +70% (mem / cpu)"
+    read -p "[exit]. Quitter -> " choix
+    [[ "$choix" == "exit" ]] && break
 
-	[[ "$choix" == "exit" ]] && break
-
-	#Affichage contenue d'un fichier
-	if [[ "$choix" == "1" ]];then
-		read -p "fichier : " fic 
-		if [[ -f $fic ]]; then
-			echo -e "[1].depart -> arret\n[2].Lignes specifique\n" 
-			read ch 
-			if [[ "$ch" == "1" ]];then
-				read -p "nb ligne de depart : " depart
-				read -p "nb ligne d'arret : " arret
-				if [ $depart -gt $arret ]; then
- 		 			 echo "Ligne de depart et d'arret invalid !"
-				else
-	  	 			nb=$(($arret-$depart+1))
- 	  				cat -n $fic | head -$arret | tail -$nb | tr ':' '\t'
-				fi
-			elif [[ "$ch" == "2" ]]; then 
-				read -p "lignes a afficher:" -a tab
-				for ((i=0; i<${#tab[@]}; i++)); do
-					s=$(cat -n $fic | head -${tab[$i]} | tail -1)
-					echo "$s"
-				done
-			fi
-		else 
-			echo "$fic n'est pas un fichier"
-		fi
-	elif [[ "$choix" == "2" ]]; then
-		bash coordonne.sh
-	elif [[ "$choix" == "3" ]]; then
-		read -p "mot a rechercher : " mot
-		read -p "fichier : " fic
-		if [[ -f $fic ]]; then
-			s=$(grep -i "$mot" $fic)
-			if [[ $s -eq 0 ]]; then
-				echo "aucun $mot dans $fic"
-			else 
-				grep -i "$mot" $fic
-			fi
-		else echo "$fic n'est pas un fichier"
-		fi
-	elif [[ "$choix" == "4" ]]; then
-		proc=$(top -b -n 1 | awk 'NR>7' | head -n 1)
-		cpu=$(echo "$proc" | awk '{print $9}')
-		mem=$(echo "$proc" | awk '{print $10}')
-
-		if [[ $cpu -gt 70 || $mem -gt 70 ]]; then
-			pid=$(echo "$proc" | awk '{print $1}')
-			p_name=$(echo "$proc" | awk '{print $12}')
-			sudo kill -9 $pid
-			echo "killing $p_name..."
-		else	echo "Aucun proc qui consomme +70%( mem / cpu )"
-		fi
-	fi
+    case "$choix" in
+        1)
+            read -p "Fichier : " fic
+            [[ ! -f $fic ]] && echo "$fic n'est pas un fichier" && continue
+            echo -e "[1]. Départ -> Arret\n[2]. Lignes specifiques" && read ch
+            case "$ch" in
+                1)  read -p "Nb ligne de depart : " depart; read -p "Nb ligne d'arret : " arret
+                    ((depart > arret)) && echo "Lignes invalides !" || cat -n "$fic" | head -"$arret" | tail -$((arret-depart+1)) ;;
+                2)  read -p "Lignes a afficher : " -a tab
+			for((i=0; i<${#tab[@]}; i++));do
+				echo "$(cat -n $fic | head -${tab[$i]} | tail -1)"
+			done
+            esac ;;
+        2) bash coordonne.sh ;;
+        3)
+            read -p "Mot a rechercher : " mot; read -p "Fichier : " fic
+            [[ ! -f $fic ]] && echo "$fic n'est pas un fichier" || grep -i "$mot" "$fic" || echo "Aucun $mot trouve." ;;
+        4)
+            proc=$(top -b -n 1 | awk 'NR>7' | head -n 1)
+            cpu=$(echo "$proc" | awk '{print $9}'); mem=$(echo "$proc" | awk '{print $10}')
+	    if [[ $cpu -gt 70 || $mem -gt 70 ]]; then
+                pid=$(echo "$proc" | awk '{print $1}'); p_name=$(echo "$proc" | awk '{print $12}')
+                sudo kill -9 "$pid" && echo "Killing $p_name..."
+            else echo "Aucun processus au-dessus de 70%."
+            fi ;;
+    esac
 done
-echo "exiting..."
+
+echo "Exiting..."
