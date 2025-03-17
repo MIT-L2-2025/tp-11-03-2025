@@ -1,0 +1,5 @@
+#!/bin/bash
+LATLONG=$(grep "^$1"$'\t' OSMTowns.txt | head -n 1)
+LAT=$(echo "$LATLONG" | cut --delimiter=$'\t' --fields=3)
+LONG=$(echo "$LATLONG" | cut --delimiter=$'\t' --fields=2)
+echo "le lien de $1 est:https://www.openstreetmap.org/#map=18/$LAT/$LONG"
