@@ -4,7 +4,7 @@ if [ -z "$1" ]; then
 fi
 LATLONG=$(grep "^$1" OSMTowns.txt | head -n1|tr '\t' ';')
 #tr change le separateur tab en ;
-nbreLigne=$(wc -l OSMTowns.txt)
+nbreLigne=$(wc -l OSMTowns.txt | cut -d" " -f1)
 LAT=$(echo "$LATLONG" |cut -d ';' -f3)
 LONG=$(echo "$LATLONG" |cut -d ';' -f2)
 echo "======>1)Nombre de ville en France : $nbreLigne\n"
