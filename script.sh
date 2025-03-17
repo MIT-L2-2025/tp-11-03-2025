@@ -5,25 +5,31 @@ while true; do
 	echo "[2]. Coordonnees d'une ville "
 	echo "[3]. Cherche mot dans un fichier"
 	echo "[4]. Kill un proc +70% (mem / cpu)"
-	echo "[exit]. quitter"
-	read choix
+	read -p "[exit]. quitter ->" choix
 
 	[[ "$choix" == "exit" ]] && break
 
 	#Affichage contenue d'un fichier
 	if [[ "$choix" == "1" ]];then
 		read -p "fichier : " fic 
-		if [[ -f $fic ]]; then 
-			read -p "nb ligne de depart : " depart
-			read -p "nb ligne d'arret : " arret
-			#s=$(wc -l $1 | awk {'print $1'})
-			#-gt: greater than != -lt
-			if [ $depart -gt $arret ]; then
- 	 			 echo "Ligne de depart et d'arret invalid !"
-				#   exit
-			else
-  	 			nb=$(($arret-$depart+1))
- 	  			cat -n $fic | head -$arret | tail -$nb | tr ':' '\t'
+		if [[ -f $fic ]]; then
+			echo -e "[1].depart -> arret\n[2].Lignes specifique\n" 
+			read ch 
+			if [[ "$ch" == "1" ]];then
+				read -p "nb ligne de depart : " depart
+				read -p "nb ligne d'arret : " arret
+				if [ $depart -gt $arret ]; then
+ 		 			 echo "Ligne de depart et d'arret invalid !"
+				else
+	  	 			nb=$(($arret-$depart+1))
+ 	  				cat -n $fic | head -$arret | tail -$nb | tr ':' '\t'
+				fi
+			elif [[ "$ch" == "2" ]]; then 
+				read -p "lignes a afficher:" -a tab
+				for ((i=0; i<${#tab[@]}; i++)); do
+					s=$(cat -n $fic | head -${tab[$i]} | tail -1)
+					echo "$s"
+				done
 			fi
 		else 
 			echo "$fic n'est pas un fichier"
@@ -56,3 +62,4 @@ while true; do
 		fi
 	fi
 done
+echo "exiting..."
