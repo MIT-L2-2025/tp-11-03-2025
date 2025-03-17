@@ -4,12 +4,15 @@ Un ensemble de scripts pour :
 1. Récupérer des images de villes depuis Wikipédia
 2. Calculer leur distance à Lyon
 3. Générer des images composites avec les informations de distance
+4. Voir la latitude et la longitude d'une ville
+5. Obténir un lien vers OpenStreetMap
 
 ##  Fonctionnalités
 
 - **Récupération d'images** depuis l'API Wikimedia
 - Calcul précis de **distance géographique**
 - Génération d'images **annotées automatiquement**
+- Génération de lien d'une image et lien vers OpenStreetMap
 
 ##  Installation
 
