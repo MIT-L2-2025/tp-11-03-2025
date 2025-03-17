@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 while true; do
 	echo "[1]. Affichage ligne specifique d'un fichier"
