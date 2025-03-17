@@ -1,0 +1,11 @@
+#!/bin/bash
+
+
+VILLE=$1
+IMAGE=$(bash ./image $VILLE)
+DISTANCE_LYON=$(bash ./distance $VILLE)
+
+echo $IMAGE
+mkdir $VILLE
+curl $IMAGE > $VILLE/input.jpg 
+convert $VILLE/input.jpg -gravity south -pointsize 50 -fill white -annotate +0+10 "$VILLE: $DISTANCE_LYON km de Lyon" $VILLE/output.jpg

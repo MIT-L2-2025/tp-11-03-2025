@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+VILLE=$1
+REPONSE=$(curl -s "https://fr.wikipedia.org/w/api.php?action=query&titles=$VILLE&prop=pageimages&pithumbsize=500&format=json")
+LIEN_IMAGE=$(echo "$REPONSE" | jq -r '.query.pages[].thumbnail.source')
+
+
+echo $LIEN_IMAGE
+
