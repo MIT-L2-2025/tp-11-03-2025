@@ -1,15 +1,12 @@
-#!/bin/bash
+#!/bin/bash/
 
-LATLONG=$(grep "^$1" OSMTowns.txt|head -n1)
-if [ -z "$LATLONG" ];
-then
-    echo "Nom de ville non trouvé"
-    exit 1
-fi
+lat_long_lyon=$(grep "Lyon" "OSMTowns.txt"|head -n1)
+long_lyon=$(echo "$lat_long_lyon" |cut  -f2)
+lat_lyon=$(echo "$lat_long_lyon" |cut  -f3)
 
-LAT=$(echo "$LATLONG" |cut -d$'\t' --fields=3)
-LONG=$(echo "$LATLONG" |cut -d$'\t' --fields=2)
+lat_long=$(grep "$1" "OSMTowns.txt"|head -n1)
+long=$(echo "$lat_long" |cut  -f2)
+lat=$(echo "$lat_long" |cut  -f3)
 
+python3 gps-dist.py "$lat_lyon" "$long_lyon" "$lat" "$long"
 
-distance=$(python3 gps-dist.py "$LAT" "$LONG" 45.7511118 4.8273739)
-echo "$distance"
