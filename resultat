@@ -1,0 +1,73 @@
+Exercice 2.
+1) telechargement
+2)le nombre de villes
+------------------------------------------------------------------
+wc -l OSMTowns.txt
+100107 OSMTowns.txt
+
+3)
+la ville la plus à l’Ouest de la France
+------------------------------------------------------------------
+sort -k2 -n OSMTowns.txt | head -n 1
+Campagne-d'Armagnac	-8.43075609325e-16	43.865
+
+
+la ville la plus à l’Est de la France
+------------------------------------------------------------------
+sort -k2 -n OSMTowns.txt | tail -n 1 
+Eyne 2600	2.0997171	42.4763087
+
+
+4)SCRIPT
+------------------------------------------------------------------
+#!/bin/bash
+LATLONG=$(grep "^$1" OSMTowns.txt|head -n1)
+
+# We use a head as the output might contain multiple city
+# named the same way.
+LAT=$(echo "$LATLONG" |cut --delimiter "	" --fields=3)
+LONG=$(echo "$LATLONG" |cut --delimiter "	" --fields=2)
+echo "La ville $1 a pour latitude $LAT et longitude $LONG"
+
+
+5) SUITE DU SCRIPT
+------------------------------------------------------------------
+#!/bin/bash
+LATLONG=$(grep "^$1" OSMTowns.txt|head -n1)
+
+# We use a head as the output might contain multiple city
+# named the same way.
+LAT=$(echo "$LATLONG" |cut --delimiter "	" --fields=3)
+LONG=$(echo "$LATLONG" |cut --delimiter "	" --fields=2)
+echo "https://www.openstreetmap.org/#map=18/ $LAT e/ $LONG"
+
+6) Commande pour afficher l’ensemble des villes contenant 
+	"chien" dans leur nom
+------------------------------------------------------------------
+	grep "chien" OSMTowns.txt 
+	
+Marchiennes	3.2825837	50.4075026
+Saint-Pons-de-Mauchiens	3.5138067	43.5136035
+Tilloy-lez-Marchiennes	3.3184044	50.4254506
+Bruille-lez-Marchiennes	3.243268	50.3567302
+RebrÃ©chien	2.0444064	47.9895806
+La Villechien	-1.7180306	47.8303503
+Villechien	-0.9856828	48.5790504
+Comblanchien	4.92122	47.10081
+
+	
+	
+	contenant "Chat" ou "chat"
+------------------------------------------------------------------
+grep -i "chat" OSMTowns.txt
+
+La ChattiÃ¨re	0.2222535	47.1828368
+Barbonnechat	2.0616446	45.8146899
+Le Chatelard	2.0581092	46.0124403
+Le Chatelier	-0.4484209	46.8970698
+Eclopechat	0.6704282	48.4229789
+Le Petit Chatain	6.0915918	45.0467179
+La Lande de Chatillon	-1.7832924	47.3117921
+..........
+
+
