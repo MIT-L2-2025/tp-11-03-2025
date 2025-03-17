@@ -27,6 +27,26 @@ function afficher_fichier() {
 	fi
 }
 
+function processus_gourmand() {
+	echo "Consommation en:"
+	echo -e "\t1 - CPU"
+	echo -e "\t2 - Mémoire"
+	read -p "> " choix
+	case $choix in
+		1)
+        		echo "Processus le plus gourmand en CPU :"
+        		top -b -n 1 | grep -E "^[ ]*[0-9]" | sort -nrk 9 | head -1
+			;;
+    		2)
+       			echo "Processus le plus gourmand en Mémoire :"
+        		top -b -n 1 | grep -E "^[ ]*[0-9]" | sort -nrk 10 | head -1
+			;;
+    		*)
+        		echo "Choix invalide."
+			;;
+    	esac
+}
+
 while true; do
 	echo -e "MENU\n\t1 - Afficher un fichier sous forme de tableau"
 	echo -e "\t2 - Afficher les processus gourmands en ressources"
@@ -38,10 +58,13 @@ while true; do
 			afficher_fichier
 			;;
 		2)
-			#affichage avec top
+			processus_gourmand	
 			;;
 		0)
 			break
+			;;
+		*)
+			echo "Choix invalide"
 			;;
 	esac		
 
