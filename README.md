@@ -17,13 +17,20 @@ Un ensemble de scripts pour :
 ```bash
 # Sur Ubuntu/Debian
 sudo apt-get install -y curl jq python3 imagemagick
+```
 
-## Utilisation
+### Utilisation
 **Pour obténir le lien et télécharger l'image:**
+```bash
 ./image.sh <nom-ville>
+```
 **Pour déterminer la distance entre une ville et Lyon:**
+```bash
 ./distance.sh <nom-ville>
+```
 **Pour obténir une image avec déscription:**
+```bash
 ./descr.sh <nom-ville>
+```
 **Pour le city.sh:**
 Il y a une manuelle dedans.
