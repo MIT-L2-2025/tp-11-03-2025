@@ -39,6 +39,6 @@ case $choix in
 		grep -i "chat" OSMTowns.txt | cut -d'	' -f1
 		;;
 	*)
-		echo "Indispo"
+		echo "Ce choix n'existe pas !!"
 		;;	
 esac
