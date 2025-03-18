@@ -35,11 +35,11 @@ function processus_gourmand() {
 	case $choix in
 		1)
         		echo "Processus le plus gourmand en CPU :"
-        		top -b -n 1 | grep -E "^[ ]*[0-9]" | sort -nrk 9 | head -1
+        		top -b -n 1 | grep "^[ ]*[0-9]" | sort -nrk 9 | head -1
 			;;
     		2)
        			echo "Processus le plus gourmand en Mémoire :"
-        		top -b -n 1 | grep -E "^[ ]*[0-9]" | sort -nrk 10 | head -1
+        		top -b -n 1 | grep "^[ ]*[0-9]" | sort -nrk 10 | head -1
 			;;
     		*)
         		echo "Choix invalide."
