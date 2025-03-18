@@ -1,4 +1,4 @@
-# Image Ville & Distance Generateur
+# Ville Image & Distance Generateur
 
 Un ensemble de scripts pour :
 1. Récupérer des images de villes depuis Wikipédia
