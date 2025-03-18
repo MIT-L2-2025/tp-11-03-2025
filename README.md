@@ -18,7 +18,6 @@ Un ensemble de scripts pour :
 
 ### Prérequis
 ```bash
-# Sur Ubuntu/Debian
 sudo apt-get install -y curl jq python3 imagemagick
 ```
 
