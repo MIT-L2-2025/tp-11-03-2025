@@ -5,7 +5,7 @@ LYON=$(grep "Lyon " OSMTowns.txt | head -n 1)
 LYON_LAT=$(echo "$LYON" | cut -d$'\t' -f3)
 LYON_LONG=$(echo "$LYON" | cut -d$'\t' -f2)
 
-VILLE=$(grep "$1 " OSMTowns.txt | head -n 1)
+VILLE=$(grep "$1" OSMTowns.txt | head -n 1)
 VILLE_LAT=$(echo "$VILLE" | cut -d$'\t' -f3)
 VILLE_LONG=$(echo "$VILLE" | cut -d$'\t' -f2)
 
