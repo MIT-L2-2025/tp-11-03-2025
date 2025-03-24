@@ -1,0 +1,9 @@
+#!/bin/bash 
+curl -s $(./image $1) -o city_image.jpg
+ if [ -f city_image.jpg ]
+    then
+     distance=$(./distance $1)
+     convert "city_image.jpg" -gravity South -pointsize 24 -annotate +0+20 "Distance à Lyon : $distance km" "image_with_text.jpg"
+     rm city_image.jpg
+    fi
+

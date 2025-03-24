@@ -1,0 +1,7 @@
+#!/bin/sh
+LONG_LAT=$(grep "$1" OSMTowns.txt|head -n 1)
+lyon_lat=45.7511118
+lyon_long=4.8273739
+ville_lat=$(echo "$LONG_LAT"|cut -f3)
+ville_long=$(echo "$LONG_LAT"|cut -f2)
+python3 gps-dist.py $lyon_lat $lyon_long $ville_lat $ville_long

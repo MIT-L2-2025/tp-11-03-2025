@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ -z "$1" ]; 
+then
+    echo "Usage: $0 <nom_de_la_ville>"
+    exit 1
+fi
+
+ville=$(echo "$1" | sed 's/ /_/g')
+
+wiki_url="https://fr.wikipedia.org/w/api.php?action=query&titles=$ville&prop=pageimages&format=json&pithumbsize=500"
+
+image_url=$(curl -s "$wiki_url" | jq -r '.query.pages | to_entries[0].value.thumbnail.source // "Aucune image trouvée"')
+
+echo "$image_url"
